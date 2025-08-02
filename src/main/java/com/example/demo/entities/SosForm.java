@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.Instant;
 import java.util.UUID;
 import java.time.LocalDateTime;
 
@@ -35,15 +36,15 @@ public class SosForm {
 
     @Column(name = "date_time", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private java.time.Instant dateTime;
-
-    @Column(name = "comment", columnDefinition = "TEXT")
-    private String comment;
+    private Instant dateTime;
 
     @Column(name = "is_ready")
     private Boolean isReady = false;
 
+    @Column(name = "comment", columnDefinition = "TEXT")
+    private String comment;
+
     @Column(name = "last_activation")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private java.time.Instant lastActivation;
+    private Instant lastActivation;
 }

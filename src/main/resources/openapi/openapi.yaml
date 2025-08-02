@@ -22,6 +22,71 @@ paths:
         '400':
           description: Ошибка валидации запроса
   /sos-form/deactivate:
+    put:
+      tags:
+        - Form
+      summary: Deactivate SOS form
+      operationId: deactivateForm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: "ABC123"
+                  description: "Code of the form to deactivate"
+                user_id:
+                  type: UUID
+                  example: "3789ychbfifnbjebw-vdf-v-dfv-df-vdf-"
+                  description: "UUID of user"
+              required:
+                - code
+                - user_id
+      responses:
+        '200':
+          description: Successfully deactivated
+        '400':
+          description: Invalid code
+        '404':
+          description: Form not found
+        '403':
+          description: Activation not allowed — less than 24 hours since last activation
+  /sos-form/activate:
+    post:
+      tags:
+        - Form
+      summary: Schedule activation of SOS form
+      operationId: activateForm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: UUID
+                  example: "fwefsf-esf-sef-se-f-esf-sABC123"
+                  description: "UUID of user"
+                activateAt:
+                  type: string
+                  format: date-time
+                  example: "2025-08-02T14:00:00Z"
+                  description: "Datetime when the form should be activated (UTC)"
+              required:
+                - code
+                - activateAt
+      responses:
+        '200':
+          description: Activation scheduled successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Form not found
+
 
 
 components:
@@ -46,15 +111,16 @@ components:
           type: string
           format: date-time
           example: "2025-08-02T12:34:56"
-        comment:
-          type: string
-          example: "Комментарий пользователя"
         isReady:
           type: boolean
           example: false
+        comment:
+          type: string
+          example: "Комментарий пользователя"
         lastActivation:
           type: string
           format: date-time
           example: "2025-08-02T13:00:00"
+          readOnly: true
 
   
