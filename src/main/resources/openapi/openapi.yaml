@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+paths:
+  /sos-form/create-update:
+    post:
+      tags:
+        - Form
+      summary: Заполнение анкеты SOS
+      operationId: createSosForm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SosFormDTO'
+      responses:
+        '201':
+          description: Анкета успешно создана
+        '400':
+          description: Ошибка валидации запроса
+  /sos-form/deactivate:
+
+
+components:
+  schemas:
+    SosFormDTO:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        telegramContact:
+          type: string
+          example: "@username"
+        deactivationCode:
+          type: string
+          example: "ACT123456"
+        address:
+          type: string
+          example: "г. Москва, ул. Пушкина, д. 1"
+        dateTime:
+          type: string
+          format: date-time
+          example: "2025-08-02T12:34:56"
+        comment:
+          type: string
+          example: "Комментарий пользователя"
+        isReady:
+          type: boolean
+          example: false
+        lastActivation:
+          type: string
+          format: date-time
+          example: "2025-08-02T13:00:00"
+
+  
